@@ -4,7 +4,7 @@ var router = express.Router();
 var path = __dirname + '/views/';
 var request = require("request");
 var fs = require('fs');
-var writedir = "../angular-app/src/assets/json/";
+var writedir = "../json/";
 
 router.use(function (req, res, next) {
     console.log("/" + req.method);
@@ -24,7 +24,7 @@ function update(sheet) {
         maxRedirects: 10
     }, function (error, response, body) {
         if(!body){console.log(error)}
-            fs.writeFile(writeto, body.feed.entry);
+            fs.writeFile(writeto, body);
     });
 }
 
