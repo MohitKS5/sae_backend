@@ -4,7 +4,7 @@ var router = express.Router();
 var path = __dirname + '/views/';
 var request = require("request");
 var fs = require('fs');
-var writedir = "../json/";
+var writedir = "./json/";
 
 router.use(function (req, res, next) {
     console.log("/" + req.method);
