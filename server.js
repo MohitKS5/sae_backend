@@ -33,11 +33,23 @@ function update(sheet) {
             fs.writeFile(writeto, body);
     });
 }
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+}));
+router.post("/save/:sheet",cors(),function (req, res) {
+    var writeto = writedir + "8.json";
+    fs.writeFile(writeto, req.body);
+    res.send('200');
+    console.log('req.body');
+});
 
 router.post("/:sheet", function (req, res) {
     update(req.params.sheet);
     res.send('200');
 });
+
 app.use("/", router);
 
 app.set('port', (process.env.PORT || 5000));
