@@ -5,6 +5,7 @@ var path = __dirname + '/views/';
 var request = require("request");
 var fs = require('fs');
 var writedir = "./json/";
+var cors = require('cors')
 
 router.use(function (req, res, next) {
     console.log("/" + req.method);
@@ -15,7 +16,7 @@ router.get("/", function (req, res) {
     res.sendFile(path + "index.html");
 });
 
-router.get("/json/:sheet",function (req,res) {
+router.get("/json/:sheet",cors(),function (req,res) {
     res.sendFile(__dirname + '/json/'+req.params.sheet+'.json');
 });
 
