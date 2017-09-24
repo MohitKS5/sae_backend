@@ -14,6 +14,11 @@ router.use(function (req, res, next) {
 router.get("/", function (req, res) {
     res.sendFile(path + "index.html");
 });
+
+router.get("/json/:sheet",function (req,res) {
+    res.sendFile(__dirname + '/json/'+req.params.sheet+'.json');
+});
+
 function update(sheet) {
     var writeto = writedir + sheet + ".json";
     request({
