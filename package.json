@@ -5,12 +5,12 @@
     "start": "node Server.js"
   },
   "dependencies": {
-    "express": "latest",
+    "express": "4.15.4",
     "request": "^2.81.0"
   },
-   "engines": {
+  "engines": {
     "node": "6.10.3",
     "npm": "3.10.10",
-	"yarn": "0.24.6"
-  } 
+    "yarn": "0.24.6"
+  }
 }
