@@ -6,6 +6,7 @@ var request = require("request");
 var fs = require('fs');
 var writedir = "./json/";
 var cors = require('cors')
+var firebase = require("firebase");
 
 router.use(function (req, res, next) {
     console.log("/" + req.method);
@@ -19,9 +20,15 @@ router.get("/", function (req, res) {
 router.get("/json/:sheet",cors(),function (req,res) {
     res.sendFile(__dirname + '/json/'+req.params.sheet+'.json');
 });
-
+var config = {
+    apiKey: "AIzaSyCecl2pYkNiex4HBnyn-2UH_-r3BipdtqU",
+    authDomain: "turbo-iitkms.firebaseapp.com",
+    databaseURL: "https://turbo-iitkms.firebaseio.com/",
+    storageBucket: "gs://turbo-iitkms.appspot.com"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 function update(sheet) {
-    var writeto = writedir + sheet + ".json";
     request({
         uri: "https://spreadsheets.google.com/feeds/list/1mK2zvp6ouN5r7kh0StqkULr32l9MyO0suBpMJUL4QeM/" + sheet + "/public/values?alt=json",
         method: "GET",
@@ -30,10 +37,12 @@ function update(sheet) {
         maxRedirects: 10
     }, function (error, response, body) {
         if(!body){console.log(error)}
-            fs.writeFile(writeto, body);
+        firebase.database().ref('data/' + sheet).set({
+            content : body
+        });
     });
 }
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
