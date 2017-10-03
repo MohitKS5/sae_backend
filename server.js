@@ -49,9 +49,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 router.post("/save/:sheet",cors(),function (req, res) {
     var writeto = writedir + "8.json";
-    fs.writeFile(writeto, req.body);
-    res.send('200');
-    console.log('req.body');
+    fs.writeFile(writeto, JSON.stringify(req.body));
+    res.send(JSON.stringify(req.body));
 });
 
 router.post("/:sheet", function (req, res) {
